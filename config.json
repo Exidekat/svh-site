@@ -1,0 +1,21 @@
+{
+    "server": {
+        "port": 3000
+    },
+    "database": {
+        "user": "postgres",
+        "host": "localhost",
+        "database": "auth",
+        "password": "0927",
+        "port": 5433
+    },
+    "database_creation_script": {
+        "db": "CREATE DATABASE auth;",
+        "tables": [
+            {
+                "name": "users",
+                "script": "CREATE TABLE users (id SERIAL primary key, email varchar(100) not null unique, authtype INT not null);"
+            }
+        ]
+    }
+}
