@@ -31,13 +31,12 @@ const initServer = () => {
     });
 }
 
-pool.connect().catch((e) => {
-    handleConnectionError(e, DATABASE_CONFIG, DATABASE_CREATION_SCRIPT, Client, () => {
-        pool.connect();
-    });
-});
-
-pool.on('connect', () => {
-    console.log('Connected to database');
+pool.connect().then(() => {
+    console.log('Initializing server');
     initServer();
+}).catch((e) => {
+    handleConnectionError(e, DATABASE_CONFIG, DATABASE_CREATION_SCRIPT, Client, pool, () => {
+        console.log('Connected to database');
+        initServer();
+    });
 });

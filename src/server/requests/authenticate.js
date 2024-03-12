@@ -5,7 +5,8 @@ module.exports = async (req, res, pool) => {
     }
 
     try {
-        const query = 'SELECT authtype FROM users WHERE email = $1';
+        const query = 'SELECT authtype FROM users WHERE email = $1;';
+        console.log(email);
         const { rows } = await pool.query(query, [email]);
         console.error(rows);
 

@@ -3,7 +3,7 @@ const readline = require('readline').createInterface({
     output: process.stdout
 });
 
-handleConnectionError = (e, DATABASE_CONFIG, DATABASE_CREATION_SCRIPT, Client, successFunction) => {
+handleConnectionError = (e, DATABASE_CONFIG, DATABASE_CREATION_SCRIPT, Client, pool, successFunction) => {
     const { database } = DATABASE_CONFIG;
     if (e.message === `database "${database}" does not exist`){
         readline.question(`Database "${database}" does not exist, create database "${database}"? Type YES to create, type NO to cancel: `, (answer) => {
@@ -18,10 +18,12 @@ handleConnectionError = (e, DATABASE_CONFIG, DATABASE_CREATION_SCRIPT, Client, s
                     console.log('Successfully created database');
 
                     try {
+                        await pool.connect();
+                        
                         for (let i in DATABASE_CREATION_SCRIPT.tables){
                             const table = DATABASE_CREATION_SCRIPT.tables[i];
 
-                            await adminClient.query(table.script);
+                            await pool.query(table.script);
 
                             console.log(`Successfully created table ${table.name}`);
                         }
