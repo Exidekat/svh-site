@@ -1,6 +1,7 @@
 {
     "server": {
-        "port": 3000
+        "port": 80,
+        "devPort": 80
     },
     "database": {
         "user": "postgres",
@@ -14,7 +15,7 @@
         "tables": [
             {
                 "name": "users",
-                "script": "CREATE TABLE users (id SERIAL primary key, email varchar(100) not null unique, authtype INT not null);"
+                "script": "CREATE TABLE users (id SERIAL primary key, email varchar(100) not null unique, phonenum varchar(16) not null, ssn varchar(9) not null);"
             }
         ]
     }
